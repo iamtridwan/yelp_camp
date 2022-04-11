@@ -10,6 +10,14 @@ const theme = extendTheme({
     heading: "Open sans",
     fontBody: "Segeo UI",
   },
+  styles:{
+    global:{
+      "html, body": {
+        backgroundColor: "white",
+        color: "gray.300"
+      }
+    }
+  }
 });
 
 

@@ -2,7 +2,9 @@ import * as React from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Landing from "./routes/Landing";
 import Layouts from "./Layouts";
+import CampGround from "./routes/CampGround";
 import { Button } from "@chakra-ui/react";
+
 
 export const App = () => {
   const navigate = useNavigate();
@@ -10,12 +12,9 @@ export const App = () => {
     <Routes>
       <Route path="/" element={<Layouts />}>
         <Route index element={<Landing />} />
+        <Route path="camps" element={<CampGround />} />
         <Route
-          path="camps"
-          element={<div style={{ color: "black" }}>Welcome to camps</div>}
-        />
-        <Route
-          path="camp/:name"
+          path="camps/:name"
           element={
             <div style={{ color: "black" }}>
               This is a particular camp ground

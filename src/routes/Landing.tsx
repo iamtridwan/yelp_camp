@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import {
   Flex,
   Image,
@@ -18,20 +18,12 @@ import booking from "../assets/Booking.svg";
 import guide from "../assets/Plum Guide.svg";
 import { CheckCircleIcon, LinkIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
+import screenContext from "../store";
 
 const Landing = () => {
-  const [size, sizeSet] = useState(window.innerWidth);
+  const size = useContext(screenContext);
   const navigate = useNavigate();
-  const getWindowSize = () => {
-    let screenSize = window.innerWidth;
-    sizeSet(screenSize);
-  };
-  useEffect(() => {
-    window.addEventListener("resize", getWindowSize);
-    return () => {
-      window.removeEventListener("resize", getWindowSize);
-    };
-  }, [size]);
+
   return (
     <Flex
       bgColor="bg"
@@ -41,7 +33,6 @@ const Landing = () => {
       pr={[0, 0, 0, 0]}
       direction="column"
       width="100%"
-      h="inherit"
     >
       <Image
         src={logo}
@@ -105,7 +96,7 @@ const Landing = () => {
           my={4}
           _hover={{ bgColor: "transparent", border: "2px", color: "bodyColor" }}
           onClick={() => {
-            navigate("camp");
+            navigate("/camps");
           }}
         >
           Veiw Campgrounds
@@ -116,19 +107,19 @@ const Landing = () => {
             <Image
               src={airbnb}
               alt="Airbnb logo"
-              boxSize="100px"
+              boxSize="120px"
               fit="contain"
             />
             <Image
               src={booking}
               alt="Booking logo"
-              boxSize="100px"
+              boxSize="120px"
               fit="contain"
             />
             <Image
               src={guide}
               alt="plumguide logo"
-              boxSize="100px"
+              boxSize="120px"
               fit="contain"
             />
           </HStack>
