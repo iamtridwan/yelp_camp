@@ -1,13 +1,11 @@
 import * as React from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Landing from "./routes/Landing";
 import Layouts from "./Layouts";
 import CampGround from "./routes/CampGround";
-import { Button } from "@chakra-ui/react";
-
+import SignIn from "./components/SignIn";
 
 export const App = () => {
-  const navigate = useNavigate();
   return (
     <Routes>
       <Route path="/" element={<Layouts />}>
@@ -21,17 +19,14 @@ export const App = () => {
             </div>
           }
         />
+        <Route path="/login" element={<SignIn />} />
         <Route
-          path="*"
+          path="/signup"
           element={
-            <Button
-              onClick={() => navigate("/")}
-              sx={{ bgColor: "black", color: "bg" }}
-            >
-              Back to Home
-            </Button>
+            <div style={{ color: "blue.900" }}>Hello to SignUp page</div>
           }
         />
+        <Route path="*" element={<SignIn />} />
       </Route>
     </Routes>
   );

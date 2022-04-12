@@ -14,13 +14,13 @@ import screenContext from "../store";
 import MobileMenu from "./MobileMenu";
 
 const NavBar = () => {
-  const size = useContext(screenContext);
+  const context = useContext(screenContext);
   const [show, setShow] = useState(false);
   return (
     <>
       <HStack align="center" w="100%" justifyContent="space-between">
         <Image src={logo} alt="logo" />
-        {size <= 768 ? (
+        {context.size <= 768 ? (
           <IconButton
             aria-label="Hamburger menu"
             icon={<AiOutlineMenu color="black" />}
@@ -50,6 +50,7 @@ const NavBar = () => {
                   color: "bodyColor",
                   border: "1px ",
                   borderColor: "bodyColor",
+
                 }}
                 p={4}
               >

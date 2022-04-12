@@ -37,7 +37,7 @@ const CampGround = (props: Props) => {
   return (
     <Box pt={4} w={["90%", "90%", "90%", "80%"]} mx="auto">
       <NavBar />
-      <Box bgColor="gray.100" p={6} my={6}>
+      <Box bgColor="yellow.50" p={6} my={6}>
         <Heading color="bodyColor">Welcome to YelpCamp!</Heading>
         <Text color="gray.700" my={4}>
           View our hand-picked campgrounds from all over the world, or add your
@@ -57,6 +57,7 @@ const CampGround = (props: Props) => {
               borderColor="gray.400"
               color="bodyColor"
               value={search}
+              variant="filled"
               onChange={(e) => setSearch(e.target.value)}
             />
           </InputGroup>
@@ -76,7 +77,11 @@ const CampGround = (props: Props) => {
           </Button>
         </Stack>
         <Link to="/addcamp">
-          <Text color="gray.700" textDecoration="underline">
+          <Text
+            color="gray.700"
+            textDecoration="underline"
+            w={["100%", "100%", "50%"]}
+          >
             Or add your own campground
           </Text>
         </Link>

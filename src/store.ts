@@ -1,7 +1,10 @@
 import { createContext } from "react";
 
 
-const initialState =  window.innerWidth
+const initialState =  {
+    size: window.innerWidth,
+    isLoggedIn: false
+}
 
 
 const screenContext = createContext(initialState)

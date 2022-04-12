@@ -21,7 +21,7 @@ import { useNavigate } from "react-router-dom";
 import screenContext from "../store";
 
 const Landing = () => {
-  const size = useContext(screenContext);
+  const context = useContext(screenContext);
   const navigate = useNavigate();
 
   return (
@@ -43,11 +43,11 @@ const Landing = () => {
         fit="contain"
       />
       <Flex
-        w={size <= 768 ? "100%" : "50%"}
+        w={context.size <= 768 ? "100%" : "50%"}
         align="left"
         pl={4}
         mt={["6", "6", "6", "2"]}
-        order={size <= 768 ? 2 : 0}
+        order={context.size <= 768 ? 2 : 0}
         direction="column"
       >
         <Heading w={["80%", "80%", "70%"]} fontSize={["2rem", "2rem", "3rem"]}>
@@ -107,28 +107,28 @@ const Landing = () => {
             <Image
               src={airbnb}
               alt="Airbnb logo"
-              boxSize="120px"
+              boxSize="100px"
               fit="contain"
             />
             <Image
               src={booking}
               alt="Booking logo"
-              boxSize="120px"
+              boxSize="100px"
               fit="contain"
             />
             <Image
               src={guide}
               alt="plumguide logo"
-              boxSize="120px"
+              boxSize="100px"
               fit="contain"
             />
           </HStack>
         </Box>
       </Flex>
       <Image
-        src={size <= 768 ? mobileImg : heroImg}
+        src={context.size <= 768 ? mobileImg : heroImg}
         alt="hero image"
-        position={size <= 768 ? "initial" : "absolute"}
+        position={context.size <= 768 ? "initial" : "absolute"}
         top={0}
         right={0}
         height={["auto", "auto", "auto", "100vh"]}
