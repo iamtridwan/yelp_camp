@@ -18,8 +18,9 @@ import logo from "../assets/Logo.svg";
 import userTest from "../assets/User Testimonial.svg";
 import { FaArrowLeft } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
-import screenContext from "../store";
+import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { isLoggedIn, userName } from "../atom";
 
 type formValue = {
   userName: string;
@@ -30,9 +31,10 @@ const SignIn = () => {
   const navigate = useNavigate();
   // const location = useLocation()
   const [user, setUser] = useState<formValue>({ userName: "", password: "" });
+  const [login, setIsLogin] = useRecoilState(isLoggedIn);
+  const [, setUsername] = useRecoilState(userName);
   const [isUserNameError, setIsUserNameError] = useState(false);
   const [isPasswordError, setIsPasswordError] = useState(false);
-  const context = useContext(screenContext);
 
   const handleChange = (e: React.FormEvent<EventTarget>) => {
     let nameEvent = e.target as HTMLInputElement;
@@ -47,9 +49,8 @@ const SignIn = () => {
       setIsUserNameError(!isUserNameError);
       setIsPasswordError(!isPasswordError);
       setUser({ userName: "", password: "" });
-      //  sessionStorage.setItem("userName", user.userName);
-      context.userName = user.userName;
-      context.isLoggedIn = true;
+      setIsLogin(!login);
+      setUsername(user.userName);
       navigate("/camps");
     } else {
       if (user.userName !== "admin") {

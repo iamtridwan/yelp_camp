@@ -1,4 +1,3 @@
-import React, { useContext } from "react";
 import {
   Flex,
   Image,
@@ -18,10 +17,11 @@ import booking from "../assets/Booking.svg";
 import guide from "../assets/Plum Guide.svg";
 import { CheckCircleIcon, LinkIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
-import screenContext from "../store";
+import { useRecoilValue } from "recoil";
+import { screenSize } from "../atom";
 
 const Landing = () => {
-  const context = useContext(screenContext);
+  const screen = useRecoilValue(screenSize);
   const navigate = useNavigate();
 
   return (
@@ -43,11 +43,11 @@ const Landing = () => {
         fit="contain"
       />
       <Flex
-        w={context.size <= 768 ? "100%" : "50%"}
+        w={screen <= 768 ? "100%" : "50%"}
         align="left"
         pl={4}
         mt={["6", "6", "6", "2"]}
-        order={context.size <= 768 ? 2 : 0}
+        order={screen <= 768 ? 2 : 0}
         direction="column"
       >
         <Heading w={["80%", "80%", "70%"]} fontSize={["2rem", "2rem", "3rem"]}>
@@ -126,9 +126,9 @@ const Landing = () => {
         </Box>
       </Flex>
       <Image
-        src={context.size <= 768 ? mobileImg : heroImg}
+        src={screen <= 768 ? mobileImg : heroImg}
         alt="hero image"
-        position={context.size <= 768 ? "initial" : "absolute"}
+        position={screen <= 768 ? "initial" : "absolute"}
         top={0}
         right={0}
         height={["auto", "auto", "auto", "100vh"]}

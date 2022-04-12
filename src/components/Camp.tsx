@@ -1,6 +1,8 @@
 import React from "react";
 import { Box, Image, Heading, Text, Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { isLoggedIn } from "../atom";
+import { useRecoilValue } from "recoil";
 
 type Props = {
   img: string;
@@ -9,7 +11,18 @@ type Props = {
 };
 
 const Camp = (props: Props) => {
+  const login = useRecoilValue(isLoggedIn);
+  console.log(login);
   const navigate = useNavigate();
+  const handleNavigate = () => {
+    if (login) {
+      let title = props.title.split(" ");
+      let newTitle = title[0] + title[1];
+      navigate(`camp/${newTitle}`);
+    } else {
+      navigate("/signin");
+    }
+  };
   return (
     <Box
       border="1px"
@@ -20,7 +33,6 @@ const Camp = (props: Props) => {
       _hover={{
         transform: "scale(1)",
         boxShadow: "xl",
-        
       }}
     >
       <Image src={props.img} alt={props.title} rounded="lg" />
@@ -43,11 +55,7 @@ const Camp = (props: Props) => {
           bgColor: "bodyColor",
           color: "bg",
         }}
-        onClick={() => {
-          let title = props.title.split(" ");
-          let newTitle = title[0] + title[1];
-          navigate(`camp/${newTitle}`);
-        }}
+        onClick={handleNavigate}
       >
         View Campground
       </Button>

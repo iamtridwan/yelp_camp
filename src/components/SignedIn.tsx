@@ -1,8 +1,14 @@
 import { Stack, Text, Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { userName, isLoggedIn } from "../atom";
+import { useRecoilValue, useRecoilState } from "recoil";
+
 
 const SignedIn = () => {
   const navigate = useNavigate();
+  const [login, setlogin] = useRecoilState(isLoggedIn);
+  const user = useRecoilValue(userName);
+
   return (
     <Stack
       direction={["column", "column", "column", "row"]}
@@ -10,7 +16,7 @@ const SignedIn = () => {
       align="center"
     >
       <Text color="gray.600" fontWeight="bold">
-        Tridwan
+        {user}
       </Text>
       <Button
         bgColor="bodyColor"
@@ -23,6 +29,7 @@ const SignedIn = () => {
         }}
         p={4}
         onClick={() => {
+          setlogin(!login);
           navigate("/");
         }}
       >

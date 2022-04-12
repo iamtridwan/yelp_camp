@@ -2,6 +2,7 @@ import React from "react";
 import { Stack, Text, Button } from "@chakra-ui/react";
 import { useNavigate, Link } from "react-router-dom";
 
+
 const SignedOut = () => {
   const navigate = useNavigate();
   return (

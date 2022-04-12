@@ -1,13 +1,13 @@
 import { Box } from "@chakra-ui/react";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import ScreenContext from "./store"
+import { useRecoilState } from "recoil";
+import { screenSize } from "./atom";
 
-// type Props = {}
+
 
 const Layouts = () => {
-  const context = useContext(ScreenContext)
-  const [screen, setScreen]  = useState(context.size)
+  const [screen, setScreen] = useRecoilState(screenSize);
   const getWindowSize = () => {
     let screenSize = window.innerWidth;
     setScreen(screenSize);
@@ -17,13 +17,11 @@ const Layouts = () => {
     return () => {
       window.removeEventListener("resize", getWindowSize);
     };
-  }, [screen]); 
+  }, [screen]);
   return (
-    <ScreenContext.Provider value={context}>
     <Box bgColor="bg">
       <Outlet />
     </Box>
-    </ScreenContext.Provider>
   );
 };
 

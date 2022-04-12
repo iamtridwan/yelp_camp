@@ -1,15 +1,16 @@
 import { Flex, HStack, Image, Text, IconButton } from "@chakra-ui/react";
-import React, { useContext, useState } from "react";
+import React, {  useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/Logo.svg";
 import { AiOutlineMenu } from "react-icons/ai";
-import screenContext from "../store";
+import { useRecoilValue } from "recoil"
+import {isLoggedIn} from "../atom"
 import MobileMenu from "./MobileMenu";
 import SignedIn from "./SignedIn";
 import SignedOut from "./SignedOut";
 
 const NavBar = () => {
-  const { isLoggedIn } = useContext(screenContext);
+  const  login  = useRecoilValue(isLoggedIn)
   const [show, setShow] = useState(false);
 
   return (
@@ -36,7 +37,7 @@ const NavBar = () => {
               Home
             </Text>
           </Link>
-          {isLoggedIn ? <SignedIn /> : <SignedOut />}
+          {login ? <SignedIn /> : <SignedOut />}
         </Flex>
       </HStack>
       {show && <MobileMenu />}

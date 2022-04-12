@@ -1,15 +1,15 @@
 import { Button, Text, Flex } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import SignedIn from "./SignedIn";
-import screenContext from "../store";
-import { useContext } from "react";
+import { useRecoilValue } from "recoil";
+import { isLoggedIn } from "../atom";
 
 const MobileMenu = () => {
-  const { isLoggedIn } = useContext(screenContext);
+  const login = useRecoilValue(isLoggedIn)
   const navigate = useNavigate();
   return (
     <>
-      {isLoggedIn ? (
+      {login ? (
         <SignedIn />
       ) : (
         <Flex
