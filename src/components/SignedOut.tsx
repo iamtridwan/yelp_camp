@@ -1,13 +1,15 @@
-import React from 'react'
-import { HStack, Text, Button } from "@chakra-ui/react";
+import React from "react";
+import { Stack, Text, Button } from "@chakra-ui/react";
 import { useNavigate, Link } from "react-router-dom";
 
-
-
-const SignOut = () => {
-    const navigate = useNavigate()
+const SignedOut = () => {
+  const navigate = useNavigate();
   return (
-    <HStack>
+    <Stack
+      direction={["column", "column", "column", "row"]}
+      spacing={2}
+      align="center"
+    >
       <Link to="/login">
         <Text color="gray.600" fontWeight="bold">
           {" "}
@@ -24,12 +26,12 @@ const SignOut = () => {
           borderColor: "bodyColor",
         }}
         p={4}
-        onClick = {() => navigate("/signup")}
+        onClick={() => navigate("/signup")}
       >
         Create an account
       </Button>
-    </HStack>
+    </Stack>
   );
-}
+};
 
-export default SignOut
+export default SignedOut;

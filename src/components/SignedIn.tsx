@@ -1,13 +1,16 @@
-import { HStack, Text, Button } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
-
+import { Stack, Text, Button } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 const SignedIn = () => {
-    const navigate = useNavigate() 
+  const navigate = useNavigate();
   return (
-    <HStack>
+    <Stack
+      direction={["column", "column", "column", "row"]}
+      spacing={2}
+      align="center"
+    >
       <Text color="gray.600" fontWeight="bold">
-       Tridwan
+        Tridwan
       </Text>
       <Button
         bgColor="bodyColor"
@@ -25,8 +28,8 @@ const SignedIn = () => {
       >
         Log Out
       </Button>
-    </HStack>
+    </Stack>
   );
-}
+};
 
-export default SignedIn
+export default SignedIn;

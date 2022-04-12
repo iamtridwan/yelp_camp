@@ -6,34 +6,38 @@ import { AiOutlineMenu } from "react-icons/ai";
 import screenContext from "../store";
 import MobileMenu from "./MobileMenu";
 import SignedIn from "./SignedIn";
-import SignOut from "./SignOut";
+import SignedOut from "./SignedOut";
 
 const NavBar = () => {
-  const context = useContext(screenContext);
+  const { isLoggedIn } = useContext(screenContext);
   const [show, setShow] = useState(false);
 
   return (
     <>
       <HStack align="center" w="100%" justifyContent="space-between">
         <Image src={logo} alt="logo" />
-        {context.size <= 768 ? (
-          <IconButton
-            aria-label="Hamburger menu"
-            icon={<AiOutlineMenu color="black" />}
-            onClick={() => {
-              setShow(!show);
-            }}
-          />
-        ) : (
-          <Flex align="center" justify="space-between" w="90%">
-            <Link to="/">
-              <Text color="gray.600" fontWeight="bold">
-                Home
-              </Text>
-            </Link>
-            {context.isLoggedIn ? <SignedIn /> : <SignOut />}
-          </Flex>
-        )}
+
+        <IconButton
+          aria-label="Hamburger menu"
+          icon={<AiOutlineMenu color="black" />}
+          onClick={() => {
+            setShow(!show);
+          }}
+          display={["block", "block", "block", "none"]}
+        />
+        <Flex
+          align="center"
+          justify="space-between"
+          w="90%"
+          display={["none", "none", "none", "flex"]}
+        >
+          <Link to="/">
+            <Text color="gray.600" fontWeight="bold">
+              Home
+            </Text>
+          </Link>
+          {isLoggedIn ? <SignedIn /> : <SignedOut />}
+        </Flex>
       </HStack>
       {show && <MobileMenu />}
     </>
