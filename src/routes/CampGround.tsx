@@ -17,12 +17,14 @@ import NavBar from "../components/NavBar";
 import { ImSearch } from "react-icons/im";
 import { Link } from "react-router-dom";
 
-type Props = {};
 
-const CampGround = (props: Props) => {
+
+const CampGround = () => {
   const campData = getCampData();
   const [camps, setCamps] = useState<ICamp[]>(campData);
   const [search, setSearch] = useState<string>("");
+  
+
 
   const handleSearchCamp = () => {
     if (search === "") {

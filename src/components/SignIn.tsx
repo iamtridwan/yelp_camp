@@ -15,14 +15,52 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import logo from "../assets/Logo.svg";
+import userTest from "../assets/User Testimonial.svg";
 import { FaArrowLeft } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import user from "../assets/User Testimonial.svg";
+import { useContext, useState } from "react";
+import screenContext from "../store";
+
+type formValue = {
+  userName: string;
+  password: string;
+};
 
 const SignIn = () => {
   const navigate = useNavigate();
-  const [formValue, setFormValue] = useState({});
+  // const location = useLocation()
+  const [user, setUser] = useState<formValue>({ userName: "", password: "" });
+  const [isUserNameError, setIsUserNameError] = useState(false);
+  const [isPasswordError, setIsPasswordError] = useState(false);
+  const context = useContext(screenContext);
+
+  const handleChange = (e: React.FormEvent<EventTarget>) => {
+    let nameEvent = e.target as HTMLInputElement;
+    let valueEvent = e.target as HTMLInputElement;
+    const name = nameEvent.name;
+    const value = valueEvent.value;
+    setUser({ ...user, [name]: value });
+  };
+
+  const handleSubmit = () => {
+    if (user.userName === "admin" && user.password === "admin") {
+      setIsUserNameError(!isUserNameError);
+      setIsPasswordError(!isPasswordError);
+      setUser({ userName: "", password: "" });
+      //  sessionStorage.setItem("userName", user.userName);
+      context.userName = user.userName;
+      context.isLoggedIn = true;
+      navigate("/camps");
+    } else {
+      if (user.userName !== "admin") {
+        setIsUserNameError(!isUserNameError);
+      }
+      if (user.password !== "admin") {
+        setIsPasswordError(!isPasswordError);
+      }
+    }
+  };
+
   return (
     <Stack
       spacing={[10, 10, 8, 4]}
@@ -64,9 +102,14 @@ const SignIn = () => {
               size="lg"
               id="userName"
               name="userName"
-              value=""
-              //   onChange={(e) => {}}
+              value={user.userName}
+              onChange={handleChange}
             />
+            {isUserNameError && (
+              <Text color="red.300" mt={2}>
+                Invalid UserName
+              </Text>
+            )}
           </FormControl>
           <FormControl my="4">
             <FormLabel htmlFor="password">Password</FormLabel>
@@ -79,12 +122,18 @@ const SignIn = () => {
               borderColor="gray.300"
               size="lg"
               id="userName"
-              name="userName"
+              name="password"
               variant="filled"
               bgColor="gray.50"
-              value=""
-              //   onChange={(e) => {}}
+              type="password"
+              value={user.password}
+              onChange={handleChange}
             />
+            {isPasswordError && (
+              <Text color="red.300" mt={2}>
+                Invalid Password
+              </Text>
+            )}
           </FormControl>
           <Button
             bgColor="bodyColor"
@@ -97,6 +146,7 @@ const SignIn = () => {
               border: "2px",
               borderColor: "black",
             }}
+            onClick={handleSubmit}
           >
             {" "}
             Login{" "}
@@ -130,7 +180,7 @@ const SignIn = () => {
           on here are definitely well picked and added"
         </Text>
         <Flex w="80%" mx="auto" mt={4}>
-          <Image src={user} alt="testimonial" />
+          <Image src={userTest} alt="testimonial" />
           <VStack ml={4}>
             <Text fontWeight="bold" fontSize="20px">
               May Andrews

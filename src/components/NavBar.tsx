@@ -1,21 +1,17 @@
-import {
-  Flex,
-  HStack,
-  Image,
-  Text,
-  Button,
-  IconButton,
-} from "@chakra-ui/react";
+import { Flex, HStack, Image, Text, IconButton } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/Logo.svg";
 import { AiOutlineMenu } from "react-icons/ai";
 import screenContext from "../store";
 import MobileMenu from "./MobileMenu";
+import SignedIn from "./SignedIn";
+import SignOut from "./SignOut";
 
 const NavBar = () => {
   const context = useContext(screenContext);
   const [show, setShow] = useState(false);
+
   return (
     <>
       <HStack align="center" w="100%" justifyContent="space-between">
@@ -35,28 +31,7 @@ const NavBar = () => {
                 Home
               </Text>
             </Link>
-            <HStack>
-              <Link to="/login">
-                <Text color="gray.600" fontWeight="bold">
-                  {" "}
-                  Login
-                </Text>
-              </Link>
-              <Button
-                bgColor="bodyColor"
-                color="bg"
-                _hover={{
-                  bgColor: "transparent",
-                  color: "bodyColor",
-                  border: "1px ",
-                  borderColor: "bodyColor",
-
-                }}
-                p={4}
-              >
-                Create an account
-              </Button>
-            </HStack>
+            {context.isLoggedIn ? <SignedIn /> : <SignOut />}
           </Flex>
         )}
       </HStack>

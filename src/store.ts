@@ -1,12 +1,17 @@
 import { createContext } from "react";
 
-
-const initialState =  {
-    size: window.innerWidth,
-    isLoggedIn: false
+type state ={
+    size: number,
+    isLoggedIn: boolean,
+    userName: string | null
 }
 
+const initialState: state = {
+  size: window.innerWidth,
+  isLoggedIn: false,
+  userName : null,
+};
 
-const screenContext = createContext(initialState)
+const screenContext = createContext(initialState);
 
-export default screenContext
+export default screenContext;
