@@ -12,15 +12,13 @@ type Props = {
 
 const Camp = (props: Props) => {
   const login = useRecoilValue(isLoggedIn);
-  console.log(login);
   const navigate = useNavigate();
   const handleNavigate = () => {
     if (login) {
-      let title = props.title.split(" ");
-      let newTitle = title[0] + title[1];
-      navigate(`camp/${newTitle}`);
+      
+      navigate(`${props.title}`);
     } else {
-      navigate("/signin");
+      navigate("/login");
     }
   };
   return (

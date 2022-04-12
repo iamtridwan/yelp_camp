@@ -11,6 +11,27 @@ const campData: ICamp[] = [
     img: mount,
     title: "Mount Ulap",
     desc: "One of the most famous hikes in Benguet is Mt Ulap in Itogon.",
+    subBy: "Andrew Mike",
+    reviews: [
+      {
+        name: "Adams Jones",
+        comment:
+          "Honestly one of the best experiences ever, took us a while to figure out how to get there but it was amazing",
+        time: "13h ago",
+      },
+      {
+        name: "Isaac Dylan",
+        comment:
+          "Travelling changes you as a person, you gain more perspective, this is the perfect spot to do that",
+        time: "1 day ago",
+      },
+      {
+        name: "Hudson Luca",
+        comment:
+          "Definitely recommend going there, not too far and not a lot of people to ruin the experince.",
+        time: "3 days ago",
+      },
+    ],
   },
   {
     img: calagus,
@@ -42,4 +63,9 @@ const campData: ICamp[] = [
 
 export const getCampData = (): ICamp[] => {
   return campData;
+};
+
+export const getACamp = (campName?: string): ICamp => {
+  let camp = campData.filter((camp) => camp.title === campName);
+  return camp[0];
 };

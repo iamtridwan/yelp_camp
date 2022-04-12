@@ -16,6 +16,7 @@ import Camp from "../components/Camp";
 import NavBar from "../components/NavBar";
 import { ImSearch } from "react-icons/im";
 import { Link } from "react-router-dom";
+import Footer from "../components/Footer"
 
 
 
@@ -100,6 +101,7 @@ const CampGround = () => {
           );
         })}
       </SimpleGrid>
+      <Footer />
     </Box>
   );
 };

@@ -27,7 +27,7 @@ type formValue = {
   password: string;
 };
 
-const SignIn = () => {
+const SignUp = () => {
   const navigate = useNavigate();
   // const location = useLocation()
   const [user, setUser] = useState<formValue>({ userName: "", password: "" });
@@ -115,7 +115,7 @@ const SignIn = () => {
           <FormControl my="4">
             <FormLabel htmlFor="password">Password</FormLabel>
             <Input
-              placeholder="Enter password"
+              placeholder="Choose Password"
               _placeholder={{
                 color: "gray.400",
               }}
@@ -149,19 +149,18 @@ const SignIn = () => {
             }}
             onClick={handleSubmit}
           >
-            {" "}
-            Login{" "}
+            Create an account
           </Button>
           <Flex mt={4} align="center" fontSize="18px">
-            <Text mr={2}>Not a user yet?</Text>
+            <Text mr={2}>Already user?</Text>
             <Text
               color="blue.300"
               textDecor="underline"
               fontWeight="bold"
               _hover={{ cursor: "pointer" }}
-              onClick={() => navigate("/signup")}
+              onClick={() => navigate("/login")}
             >
-              Create an account
+              Sign In
             </Text>
           </Flex>
         </form>
@@ -194,4 +193,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;

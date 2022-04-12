@@ -4,35 +4,43 @@ import Landing from "./routes/Landing";
 import Layouts from "./Layouts";
 import CampGround from "./routes/CampGround";
 import SignIn from "./components/SignIn";
-import { RecoilRoot } from "recoil";
+import { useRecoilValue } from "recoil";
+import { isLoggedIn } from "./atom";
+import SignUp from "./components/SignUp";
+import CampDetail from "./routes/CampDetail";
+
 
 export const App = () => {
+  const login = useRecoilValue(isLoggedIn)
   return (
-    <RecoilRoot>
-      <Routes>
-        <Route path="/" element={<Layouts />}>
-          <Route index element={<Landing />} />
-          <Route path="camps" element={<CampGround />} />
+    <Routes>
+      <Route path="/" element={<Layouts />}>
+        <Route index element={<Landing />} />
+        <Route path="camps" element={<CampGround />} />
+        {login ? (
           <Route
             path="camps/:name"
             element={
-              <div style={{ color: "black" }}>
-                This is a particular camp ground
-              </div>
+              <CampDetail />
             }
           />
+        ) : (
           <Route path="/login" element={<SignIn />} />
-          <Route
-            path="/signup"
-            element={
-              <div style={{ color: "blue.900" }}>Hello to SignUp page</div>
-            }
-          />
-          <Route path="*" element={<SignIn />} />
-        </Route>
-      </Routes>
-    </RecoilRoot>
+        )}
+
+        <Route path="/login" element={<SignIn />} />
+        <Route
+          path="/signup"
+          element={
+            <SignUp />
+          }
+        />
+        <Route path="*" element={<Landing />} />
+      </Route>
+    </Routes>
   );
 };
+
+
 
 
