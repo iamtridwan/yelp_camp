@@ -4,7 +4,7 @@ import latik from "../assets/compressed/latikriverside.jpg";
 import onay from "../assets/compressed/onaybeach.jpg";
 import seven from "../assets/compressed/sevensisterswaterfall.jpg";
 import buloy from "../assets/compressed/buloysprings.jpg";
-import { ICamp } from "../models";
+import { ICamp, IReview } from "../models";
 
 const campData: ICamp[] = [
   {
@@ -12,6 +12,7 @@ const campData: ICamp[] = [
     title: "Mount Ulap",
     desc: "One of the most famous hikes in Benguet is Mt Ulap in Itogon.",
     subBy: "Andrew Mike",
+    cost: "$104.99/night",
     reviews: [
       {
         name: "Adams Jones",
@@ -37,27 +38,42 @@ const campData: ICamp[] = [
     img: calagus,
     title: "Calaguas Islands",
     desc: "A paradise of islands that can rival the white sand beauty of Boracay.",
+    subBy: "",
+    cost: "",
+    reviews: [],
   },
 
   {
     img: onay,
     title: "Onay Beach",
     desc: "This is one of the best camping sites, beautiful and pristine",
+    subBy: "",
+    cost: "",
+    reviews: [],
   },
   {
     img: seven,
     title: "Seven Sisters Waterfall",
     desc: "The Seven Sisters is the 39th tallest waterfall in Norway.",
+    subBy: "",
+    cost: "",
+    reviews: [],
   },
   {
     img: latik,
     title: "Latik Riverside",
     desc: "Phillipines is one of the most dazzling countries in all of Asia",
+    subBy: "",
+    cost: "",
+    reviews: [],
   },
   {
     img: buloy,
     title: "Buloy Springs",
     desc: "This is one of the best beach camping sites, beautifull and pristine",
+    subBy: "",
+    cost: "",
+    reviews: [],
   },
 ];
 
@@ -69,3 +85,11 @@ export const getACamp = (campName?: string): ICamp => {
   let camp = campData.filter((camp) => camp.title === campName);
   return camp[0];
 };
+
+export const addReview = (name:string, newReview:IReview) => {
+    campData.forEach(camp => {
+      if(camp.title === name){
+        camp.reviews?.push(newReview)
+      }
+    })
+}

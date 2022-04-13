@@ -45,18 +45,22 @@ const SignUp = () => {
   };
 
   const handleSubmit = () => {
-    if (user.userName === "admin" && user.password === "admin") {
+    if (user.userName !== "" && user.password !== "") {
       setIsUserNameError(!isUserNameError);
       setIsPasswordError(!isPasswordError);
       setUser({ userName: "", password: "" });
       setIsLogin(!login);
       setUsername(user.userName);
+      sessionStorage.setItem(
+        "loginAs",
+        JSON.stringify({ user: user.userName, login: true })
+      );
       navigate("/camps");
     } else {
-      if (user.userName !== "admin") {
+      if (user.userName === "") {
         setIsUserNameError(!isUserNameError);
       }
-      if (user.password !== "admin") {
+      if (user.password === "") {
         setIsPasswordError(!isPasswordError);
       }
     }
