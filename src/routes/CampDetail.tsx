@@ -23,6 +23,7 @@ import Review from "../components/Review";
 import { IReview } from "../models";
 import { addReview } from "../data/campData";
 import { BsFillChatDotsFill } from "react-icons/bs";
+import logo from "../assets/Logo.svg";
 import { useRecoilValue } from "recoil";
 import { userName } from "../atom";
 
@@ -194,7 +195,13 @@ const CampDetail = () => {
               Post Comment
             </Button>
           </ModalBody>
-          <ModalFooter>
+          <ModalFooter
+            w="full"
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Image src={logo} alt="logo" />
             <Button onClick={onClose}>Close</Button>
           </ModalFooter>
         </ModalContent>

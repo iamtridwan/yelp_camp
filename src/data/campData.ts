@@ -86,10 +86,14 @@ export const getACamp = (campName?: string): ICamp => {
   return camp[0];
 };
 
-export const addReview = (name:string, newReview:IReview) => {
-    campData.forEach(camp => {
-      if(camp.title === name){
-        camp.reviews?.push(newReview)
-      }
-    })
-}
+export const addReview = (name: string, newReview: IReview) => {
+  campData.forEach((camp) => {
+    if (camp.title === name) {
+      camp.reviews?.push(newReview);
+    }
+  });
+};
+
+export const addCamp = (data: any) => {
+  campData.push(data);
+};

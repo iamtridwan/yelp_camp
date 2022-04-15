@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -9,24 +9,53 @@ import {
   InputLeftElement,
   SimpleGrid,
   Text,
+  useDisclosure,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  FormControl,
+  FormLabel,
+  Textarea,
+  Image,
+  useToast,
 } from "@chakra-ui/react";
 import { ICamp } from "../models";
 import { getCampData } from "../data/campData";
 import Camp from "../components/Camp";
 import NavBar from "../components/NavBar";
 import { ImSearch } from "react-icons/im";
-import { Link } from "react-router-dom";
-import Footer from "../components/Footer"
+import logo from "../assets/Logo.svg";
+import { isLoggedIn } from "../atom";
+import { useRecoilValue } from "recoil";
+import Footer from "../components/Footer";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { addCamp } from "../data/campData"
 
-
+type FormValue = {
+  name: string;
+  price: string;
+  image: string;
+  desc: string;
+};
 
 const CampGround = () => {
   const campData = getCampData();
   const [camps, setCamps] = useState<ICamp[]>(campData);
   const [search, setSearch] = useState<string>("");
-  
+  const { isOpen, onClose, onOpen } = useDisclosure();
+  const login = useRecoilValue(isLoggedIn);
+  const toast = useToast();
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValue>();
 
-
+  // searching for camp input
   const handleSearchCamp = () => {
     if (search === "") {
       setCamps(campData);
@@ -37,6 +66,7 @@ const CampGround = () => {
       setCamps(filtered);
     }
   };
+
   return (
     <Box pt={4} w={["90%", "90%", "90%", "80%"]} mx="auto">
       <NavBar />
@@ -79,16 +109,45 @@ const CampGround = () => {
             {camps.length < campData.length ? "See Full list" : "Search"}
           </Button>
         </Stack>
-        <Link to="/addcamp">
-          <Text
-            color="gray.700"
-            textDecoration="underline"
-            w={["100%", "100%", "50%"]}
-          >
-            Or add your own campground
-          </Text>
-        </Link>
+        <Text
+          color="gray.700"
+          textDecoration="underline"
+          w={["100%", "100%", "50%"]}
+          _hover={{ cursor: "pointer" }}
+          onClick={() => {
+            if (login) {
+              onOpen();
+            } else {
+              toast({
+                position: "top",
+                duration: 1000,
+                render: () => (
+                  <Box
+                    bg="red.500"
+                    color="bg"
+                    textAlign="center"
+                    p={4}
+                    rounded="md"
+                    fontSize="18px"
+                  >
+                    You're not logged in!
+                  </Box>
+                ),
+              });
+              setTimeout(() => {
+                navigate("/login");
+              }, 1200);
+            }
+          }}
+        >
+          Or add your own campground
+        </Text>
       </Box>
+      {camps.length === 0 && (
+        <Box fontSize="18px" color="bodyColor">
+          Camp does not exist
+        </Box>
+      )}
       <SimpleGrid columns={[1, 1, 2, 3]} spacing={3} pt={8}>
         {camps.map((camp) => {
           return (
@@ -101,6 +160,147 @@ const CampGround = () => {
           );
         })}
       </SimpleGrid>
+      <Modal isOpen={isOpen} onClose={onClose} size="full">
+        <ModalContent
+          sx={{
+            bgColor: "bg",
+          }}
+        >
+          <ModalHeader>
+            <NavBar />
+          </ModalHeader>
+          <ModalBody w={["full", "full", "80%", "50%"]} mx="auto">
+            <Heading color="bodyColor" fontSize="3rem" mb={4}>
+              Add New Campground
+            </Heading>
+            <form
+              onSubmit={handleSubmit((data: FormValue) => {
+                addCamp(data);
+              })}
+            >
+              <FormControl mb={4}>
+                <FormLabel htmlFor="name" fontSize="18px" color="gray.700">
+                  Campground Name
+                </FormLabel>
+                <Input
+                  placeholder="camp name"
+                  _placeholder={{
+                    color: "gray.500",
+                  }}
+                  id="name"
+                  size="lg"
+                  variant="filled"
+                  bgColor="gray.100"
+                  border="1px"
+                  borderColor="gray.300"
+                  borderRadius={2}
+                  {...register("name", { required: true })}
+                  defaultValue=""
+                />
+                {errors.name && (
+                  <Text color="red.500" fontSize="18px">
+                    This field is required
+                  </Text>
+                )}
+              </FormControl>
+              <FormControl mb={4}>
+                <FormLabel htmlFor="price" fontSize="18px" color="gray.700">
+                  Price
+                </FormLabel>
+                <Input
+                  {...register("price", { required: true })}
+                  defaultValue=""
+                  placeholder="price here"
+                  _placeholder={{
+                    color: "gray.500",
+                  }}
+                  id="price"
+                  size="lg"
+                  variant="filled"
+                  bgColor="gray.100"
+                  border="1px"
+                  borderColor="gray.300"
+                  borderRadius={2}
+                />
+                {errors.price && (
+                  <Text color="red.500" fontSize="18px">
+                    This field is required
+                  </Text>
+                )}
+              </FormControl>
+              <FormControl mb={4}>
+                <FormLabel htmlFor="image" fontSize="18px" color="gray.700">
+                  Image
+                </FormLabel>
+                <Input
+                  placeholder="camp name"
+                  id="image"
+                  size="lg"
+                  type="file"
+                  variant="filled"
+                  bgColor="gray.100"
+                  {...register("image", { required: true })}
+                  defaultValue=""
+                  border="1px"
+                  borderColor="gray.300"
+                  borderRadius={2}
+                />
+                {errors.image && (
+                  <Text color="red.500" fontSize="18px">
+                    This field is required
+                  </Text>
+                )}
+              </FormControl>
+              <FormControl mb={4}>
+                <FormLabel htmlFor="desc" fontSize="18px" color="gray.700">
+                  Description
+                </FormLabel>
+                <Textarea
+                  placeholder="Description Here"
+                  _placeholder={{ color: "gray.600" }}
+                  id="desc"
+                  h="30vh"
+                  bgColor="gray.100"
+                  {...register("desc", { required: true })}
+                  defaultValue=""
+                  border="1px"
+                  borderColor="gray.300"
+                  borderRadius={2}
+                />
+                {errors.desc && (
+                  <Text color="red.500" fontSize="18px">
+                    This field is required
+                  </Text>
+                )}
+              </FormControl>
+              <Button
+                bgColor="bodyColor"
+                color="bg"
+                w="full"
+                h="50px"
+                type="submit"
+                _hover={{
+                  color: "bodyColor",
+                  bgColor: "transparent",
+                  border: "1px",
+                  borderColor: "bodyColor",
+                }}
+              >
+                Add Campground
+              </Button>
+            </form>
+          </ModalBody>
+          <ModalFooter
+            w="full"
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Image src={logo} alt="logo" />
+            <Button onClick={onClose}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <Footer />
     </Box>
   );

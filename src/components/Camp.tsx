@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Image, Heading, Text, Button } from "@chakra-ui/react";
+import { Box, Image, Heading, Text, Button, useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { isLoggedIn } from "../atom";
 import { useRecoilValue } from "recoil";
@@ -13,12 +13,23 @@ type Props = {
 const Camp = (props: Props) => {
   const login = useRecoilValue(isLoggedIn);
   const navigate = useNavigate();
+  const toast = useToast();
   const handleNavigate = () => {
     if (login) {
-      
       navigate(`${props.title}`);
     } else {
-      navigate("/login");
+      toast({
+        position: "top",
+        duration: 1000,
+        render: () => (
+          <Box bg="red.500" color="bg" fontSize="18px" rounded="md" p={4}>
+            Please log in!
+          </Box>
+        ),
+      });
+      setTimeout(() => {
+        navigate("/login");
+      }, 1200);
     }
   };
   return (
