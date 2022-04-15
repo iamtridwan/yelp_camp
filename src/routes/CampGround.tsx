@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Button,
@@ -32,12 +32,12 @@ import { useRecoilValue } from "recoil";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { addCamp } from "../data/campData"
+import { addCamp } from "../data/campData";
 
 type FormValue = {
-  name: string;
-  price: string;
-  image: string;
+  title: string;
+  cost: string;
+  img: string;
   desc: string;
 };
 
@@ -52,9 +52,10 @@ const CampGround = () => {
   const {
     register,
     handleSubmit,
+    // watch,
     formState: { errors },
   } = useForm<FormValue>();
-
+  // console.log(watch());
   // searching for camp input
   const handleSearchCamp = () => {
     if (search === "") {
@@ -194,10 +195,10 @@ const CampGround = () => {
                   border="1px"
                   borderColor="gray.300"
                   borderRadius={2}
-                  {...register("name", { required: true })}
+                  {...register("title", { required: true })}
                   defaultValue=""
                 />
-                {errors.name && (
+                {errors.title && (
                   <Text color="red.500" fontSize="18px">
                     This field is required
                   </Text>
@@ -208,7 +209,7 @@ const CampGround = () => {
                   Price
                 </FormLabel>
                 <Input
-                  {...register("price", { required: true })}
+                  {...register("cost", { required: true })}
                   defaultValue=""
                   placeholder="price here"
                   _placeholder={{
@@ -222,7 +223,7 @@ const CampGround = () => {
                   borderColor="gray.300"
                   borderRadius={2}
                 />
-                {errors.price && (
+                {errors.cost && (
                   <Text color="red.500" fontSize="18px">
                     This field is required
                   </Text>
@@ -239,13 +240,13 @@ const CampGround = () => {
                   type="file"
                   variant="filled"
                   bgColor="gray.100"
-                  {...register("image", { required: true })}
+                  {...register("img", { required: true })}
                   defaultValue=""
                   border="1px"
                   borderColor="gray.300"
                   borderRadius={2}
                 />
-                {errors.image && (
+                {errors.img && (
                   <Text color="red.500" fontSize="18px">
                     This field is required
                   </Text>

@@ -95,5 +95,5 @@ export const addReview = (name: string, newReview: IReview) => {
 };
 
 export const addCamp = (data: any) => {
-  campData.push(data);
+  campData.push({ ...data, subBy: "", reviews: [] });
 };
