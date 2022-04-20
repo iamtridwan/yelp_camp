@@ -40,8 +40,7 @@ const Camp = (props: Props) => {
       transform="scale(0.9)"
       borderColor="gray.300"
       _hover={{
-        transform: "scale(1)",
-        boxShadow: "xl",
+        transform: "translateY(-1px)",
       }}
     >
       <Image src={props.img} alt={props.title} rounded="lg" />

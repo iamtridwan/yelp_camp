@@ -27,7 +27,7 @@ import Camp from "../components/Camp";
 import NavBar from "../components/NavBar";
 import { ImSearch } from "react-icons/im";
 import logo from "../assets/Logo.svg";
-import { isLoggedIn } from "../atom";
+import { isLoggedIn, userName } from "../atom";
 import { useRecoilValue } from "recoil";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
@@ -36,6 +36,7 @@ import { addCamp } from "../data/campData";
 
 type FormValue = {
   title: string;
+  subBy: string;
   cost: string;
   img: string;
   desc: string;
@@ -47,6 +48,7 @@ const CampGround = () => {
   const [search, setSearch] = useState<string>("");
   const { isOpen, onClose, onOpen } = useDisclosure();
   const login = useRecoilValue(isLoggedIn);
+  const aUser = useRecoilValue(userName);
   const toast = useToast();
   const navigate = useNavigate();
   const {
@@ -180,6 +182,27 @@ const CampGround = () => {
               })}
             >
               <FormControl mb={4}>
+                <FormLabel htmlFor="user">Username</FormLabel>
+                <Input
+                  {...register("subBy")}
+                  defaultValue={aUser}
+                  readOnly
+                  p={4}
+                  rounded="md"
+                  variant="filled"
+                  bgColor="gray.100"
+                  border="1px"
+                  borderColor="gray.300"
+                  placeholder="camp name"
+                  _placeholder={{
+                    color: "gray.500",
+                  }}
+                  borderRadius={2}
+                  id="user"
+                />
+              </FormControl>
+
+              <FormControl mb={4}>
                 <FormLabel htmlFor="name" fontSize="18px" color="gray.700">
                   Campground Name
                 </FormLabel>
@@ -285,6 +308,17 @@ const CampGround = () => {
                   bgColor: "transparent",
                   border: "1px",
                   borderColor: "bodyColor",
+                }}
+                onClick={() => {
+                  if (
+                    !errors.cost &&
+                    !errors.desc &&
+                    !errors.img &&
+                    !errors.subBy &&
+                    !errors.title
+                  ) {
+                    onClose();
+                  }
                 }}
               >
                 Add Campground

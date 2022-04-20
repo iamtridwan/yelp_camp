@@ -19,6 +19,7 @@ import { CheckCircleIcon, LinkIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { screenSize } from "../atom";
+import { motion } from "framer-motion";
 
 const Landing = () => {
   const screen = useRecoilValue(screenSize);

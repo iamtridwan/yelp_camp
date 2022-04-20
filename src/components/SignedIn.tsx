@@ -1,5 +1,5 @@
 import { Stack, Text, Button } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { userName, isLoggedIn } from "../atom";
 import { useRecoilValue, useRecoilState } from "recoil";
 
@@ -15,6 +15,15 @@ const SignedIn = () => {
       spacing={2}
       align="center"
     >
+      <Link to="/">
+        <Text
+          color="gray.600"
+          fontWeight="bold"
+          display={["block", "block", "block", "none"]}
+        >
+          Home
+        </Text>
+      </Link>
       <Text color="gray.600" fontWeight="bold">
         {user}
       </Text>

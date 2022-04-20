@@ -2,7 +2,6 @@ import React from "react";
 import { Stack, Text, Button } from "@chakra-ui/react";
 import { useNavigate, Link } from "react-router-dom";
 
-
 const SignedOut = () => {
   const navigate = useNavigate();
   return (
@@ -11,6 +10,15 @@ const SignedOut = () => {
       spacing={2}
       align="center"
     >
+      <Link to="/">
+        <Text
+          color="gray.600"
+          fontWeight="bold"
+          display={["block", "block", "block", "none"]}
+        >
+          Home
+        </Text>
+      </Link>
       <Link to="/login">
         <Text color="gray.600" fontWeight="bold">
           {" "}

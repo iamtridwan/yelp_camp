@@ -35,7 +35,7 @@ const CampDetail = () => {
   const [camp, setCamp] = useState(getACamp(params.name));
   const [text, setText] = useState("");
   const user = useRecoilValue(userName);
-
+  console.log(camp);
   const d = new Date();
   const review: IReview = {
     name: user,
