@@ -15,8 +15,9 @@ export const App = () => {
 
   useEffect(() => {
     const loginAs = sessionStorage.getItem("loginAs");
-    if (loginAs) {
-      setLogin(!login);
+    if (typeof loginAs === 'string') {
+      let status = JSON.parse(loginAs)
+      setLogin(status.login);
     }
   }, []);
   return (

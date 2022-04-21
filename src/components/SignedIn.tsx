@@ -1,13 +1,21 @@
 import { Stack, Text, Button } from "@chakra-ui/react";
 import { useNavigate, Link } from "react-router-dom";
-import { userName, isLoggedIn } from "../atom";
-import { useRecoilValue, useRecoilState } from "recoil";
-
+import { isLoggedIn } from "../atom";
+import { useRecoilState } from "recoil";
+import { useEffect, useState } from "react";
 
 const SignedIn = () => {
   const navigate = useNavigate();
   const [login, setlogin] = useRecoilState(isLoggedIn);
-  const user = useRecoilValue(userName);
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    const loginUser = sessionStorage.getItem("loginAs");
+    if (typeof loginUser === "string") {
+      let status = JSON.parse(loginUser);
+      setUser(status.user);
+    }
+  }, []);
 
   return (
     <Stack
@@ -39,6 +47,7 @@ const SignedIn = () => {
         p={4}
         onClick={() => {
           setlogin(!login);
+          sessionStorage.removeItem("loginAs");
           navigate("/");
         }}
       >

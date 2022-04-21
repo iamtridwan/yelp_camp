@@ -24,8 +24,9 @@ import { IReview } from "../models";
 import { addReview } from "../data/campData";
 import { BsFillChatDotsFill } from "react-icons/bs";
 import logo from "../assets/Logo.svg";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { userName } from "../atom";
+// import getFilePath from "../getPath";
 
 // type Props = {}
 
@@ -34,8 +35,8 @@ const CampDetail = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [camp, setCamp] = useState(getACamp(params.name));
   const [text, setText] = useState("");
-  const user = useRecoilValue(userName);
-  console.log(camp);
+  const [user, setUser] = useRecoilState(userName);
+
   const d = new Date();
   const review: IReview = {
     name: user,
@@ -45,6 +46,11 @@ const CampDetail = () => {
 
   useEffect(() => {
     setCamp(getACamp(params.name));
+    const loginUser = sessionStorage.getItem("loginAs");
+    if (typeof loginUser === "string") {
+      const userLoggedIn = JSON.parse(loginUser);
+      setUser(userLoggedIn.user);
+    }
   }, [text]);
 
   return (

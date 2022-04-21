@@ -12,3 +12,8 @@ export interface ICamp {
   reviews?: IReview[];
   cost?: string;
 }
+
+export interface Status {
+  user: string,
+  login: boolean
+} 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -27,7 +27,7 @@ import Camp from "../components/Camp";
 import NavBar from "../components/NavBar";
 import { ImSearch } from "react-icons/im";
 import logo from "../assets/Logo.svg";
-import { isLoggedIn, userName } from "../atom";
+import { isLoggedIn } from "../atom";
 import { useRecoilValue } from "recoil";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
@@ -48,7 +48,7 @@ const CampGround = () => {
   const [search, setSearch] = useState<string>("");
   const { isOpen, onClose, onOpen } = useDisclosure();
   const login = useRecoilValue(isLoggedIn);
-  const aUser = useRecoilValue(userName);
+  const [aUser, setaUser] = useState('');
   const toast = useToast();
   const navigate = useNavigate();
   const {
@@ -57,7 +57,15 @@ const CampGround = () => {
     // watch,
     formState: { errors },
   } = useForm<FormValue>();
-  // console.log(watch());
+
+
+  useEffect(() => {
+    const loginStatus = sessionStorage.getItem("loginAs")
+    if(typeof loginStatus === 'string'){
+      const status = JSON.parse(loginStatus)
+      setaUser(status.user)
+    }
+  }, [])
   // searching for camp input
   const handleSearchCamp = () => {
     if (search === "") {

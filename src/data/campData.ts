@@ -6,6 +6,7 @@ import seven from "../assets/compressed/sevensisterswaterfall.jpg";
 import buloy from "../assets/compressed/buloysprings.jpg";
 import { ICamp, IReview } from "../models";
 
+
 const campData: ICamp[] = [
   {
     img: mount,
@@ -76,16 +77,17 @@ const campData: ICamp[] = [
     reviews: [],
   },
 ];
-
+// getting all camp data
 export const getCampData = (): ICamp[] => {
   return campData;
 };
-
+// getting a single campground data
 export const getACamp = (campName?: string): ICamp => {
   let camp = campData.filter((camp) => camp.title === campName);
   return camp[0];
 };
 
+// adding a review for particular campground data
 export const addReview = (name: string, newReview: IReview) => {
   campData.forEach((camp) => {
     if (camp.title === name) {
@@ -94,6 +96,12 @@ export const addReview = (name: string, newReview: IReview) => {
   });
 };
 
+// adding a new camp ground to list of campgrounds
 export const addCamp = (data: any) => {
-  campData.push({ ...data, cost:`$${data.cost}`, reviews: [] });
+  campData.push({
+    ...data,
+    cost: `$${data.cost}`,
+    img: data.img[0]["name"],
+    reviews: [],
+  });
 };
